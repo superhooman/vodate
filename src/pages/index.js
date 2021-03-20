@@ -6,48 +6,65 @@ const Index = () => {
   const [audio, setAudio] = useState("");
   const global = useContext(GlobalContext);
   const startAudio = () => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        setStarted(true);
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.start();
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      setStarted(true);
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start();
 
-        const audioChunks = [];
-        mediaRecorder.addEventListener("dataavailable", event => {
-          audioChunks.push(event.data);
-        });
-
-        mediaRecorder.addEventListener("stop", () => {
-          const audioBlob = new Blob(audioChunks);
-          const audioUrl = URL.createObjectURL(audioBlob);
-          /*const audio = new Audio(audioUrl);
-          audio.play();*/
-          setAudio(audioUrl);
-          setStarted(false)
-        });
-
-        setTimeout(() => {
-          mediaRecorder.stop();
-        }, 3000);
+      const audioChunks = [];
+      mediaRecorder.addEventListener("dataavailable", (event) => {
+        audioChunks.push(event.data);
       });
+
+      mediaRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        /*const audio = new Audio(audioUrl);
+          audio.play();*/
+        setAudio(audioUrl);
+        setStarted(false);
+      });
+
+      setTimeout(() => {
+        mediaRecorder.stop();
+      }, 3000);
+    });
+  };
+  if (!global.user) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <svg
+          className="animate-spin h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
+    );
   }
   return (
-    <div className="min-h-screen flex items-center flex-col justify-center">
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6">
-      <div className="block text-center mb-2">
-          {global.user ? global.user.name : 'ой-ой'}
-        </div>
-        <code className="block mb-8 w-full p-4 rounded bg-gray-200 overflow-scroll">
-          {JSON.stringify(global.user)}
-        </code>
-        <button disabled={started} onClick={startAudio} className="py-4 px-12 text-center mb-4 rounded bg-red-500 text-white disabled:opacity-50">{started ? '...' : "startAudio"}</button>
-      {audio ? (<audio controls>
-  <source src={audio} type="audio/mpeg"/>
-</audio>) : null}
-      </div>
-     
+    <div className="h-screen px-8 pt-32">
+      <svg className="h-24" viewBox="0 0 237 223" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+        <path d="M13 80l109 131L225 65c-38 11-72-1-103-35C91-5 55 12 13 80z" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+      <h1 className="font-bold text-2xl">VoDate</h1>
+      <p className="text-lg">{global.user}, добро пожаловать в VoDate!</p>
     </div>
-  )
-}
+  );
+};
 
 export default Index;
