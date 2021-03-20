@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import TabBar from "../../components/tabbar";
 
 const App = () => {
     const router = useRouter();
@@ -12,10 +13,8 @@ const App = () => {
         })
     }, [])
     return(
-        <div className="h-screen">
-            <div className="p-8">
-                <h1>Hello</h1>
-            </div>
+        <div className="h-screen p-8 relative">
+            <TabBar/>
         </div>
     )
 }
