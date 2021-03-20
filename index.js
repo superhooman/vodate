@@ -2,13 +2,9 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(process.cwd(), '.env') });
 const express = require('express');
 
-const UserController = require('./server/controllers/user');
-
 const {
-  PORT, MONGO_URL, REDIS_URL, COOKIE_NAME, SESSION_SECRET, DOMAIN
+  PORT, MONGO_URL, REDIS_URL, COOKIE_NAME, SESSION_SECRET
 } = process.env;
-
-const PROD = process.env.NODE_ENV === "production"
 
 const mongoose = require('mongoose');
 const Redis = require('ioredis');
@@ -16,6 +12,8 @@ const connectRedis = require('connect-redis');
 const session = require('express-session');
 const App = require('./server/app');
 
+const UserController = require('./server/controllers/user');
+const ProfileController = require('./server/controllers/profile');
 
 const RedisStore = connectRedis(session);
 const redisClient = new Redis(REDIS_URL);
@@ -23,7 +21,8 @@ const redisClient = new Redis(REDIS_URL);
 const app = new App({
   port: PORT,
   controllers: [
-    new UserController()
+    new UserController(),
+    new ProfileController()
   ],
   middleWares: [
     express.json(),

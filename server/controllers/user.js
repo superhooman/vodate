@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const verify = require('../utils/verify');
+const auth = require('../utils/auth');
 const {sendError, errEnum} = require('../errors');
 
 class UserController {
@@ -43,7 +44,7 @@ class UserController {
             return sendError(req, res, errEnum.WRONG_AUTH);
         }
     });
-    this.router.get('/me', async (req, res) => {
+    this.router.get('/me', auth, async (req, res) => {
         if(!req.query.id){
             return sendError(req, res, errEnum.FORM_ERROR);
         }
@@ -64,15 +65,10 @@ class UserController {
             success: false
         })
     })
-    this.router.get('/check', async (req, res) => {
-        if(req.session && req.session.user){
-            return res.json({
-                success: true
-            })
-        }else{
-            console.log(`user: `, req.session.user)
-            return sendError(req, res, errEnum.WRONG_SESSION)
-        }
+    this.router.get('/check', auth, async (_, res) => {
+        return res.json({
+            success: true
+        })
     })
   }
 }

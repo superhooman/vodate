@@ -14,6 +14,8 @@ module.exports = {
     extend: {
       opacity: ['disabled'],
       scale: ['group-hover', 'active'],
+      fill: ['first'],
+      borderColor: ['dark']
     },
   },
   plugins: [],

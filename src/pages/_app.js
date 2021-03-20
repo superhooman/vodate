@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import aituBridge from "@btsd/aitu-bridge";
 import GlobalContext from "../utils/globalContext";
@@ -13,6 +13,7 @@ const App = ({ Component, pageProps }) => {
     const router = useRouter();
     const [global, setGlobal] = useState({
         user: PROD ? null : TEST,
+        isX: false
     });
     const getMe = async () => {
         try {
@@ -40,6 +41,16 @@ const App = ({ Component, pageProps }) => {
             });
         });
     }, []);
+    useLayoutEffect(() => {
+        let iPhone = /iPhone/.test(navigator.userAgent) && !window.MSStream
+        let aspect = window.screen.width / window.screen.height
+        if (iPhone && aspect.toFixed(3) === "0.462") {
+            setGlobal(global => ({
+                ...global,
+                isX: true
+            }))
+        }
+    }, [])
     return (
         <GlobalContext.Provider value={global}>
             <Component {...pageProps} />
