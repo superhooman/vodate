@@ -5,7 +5,11 @@ const Index = () => {
   const global = useContext(GlobalContext)
   return(
     <div className="min-h-screen flex items-center justify-center">
-      {global.user ? global.user.name : 'ой-ой'}
+      {global.user ? (
+        <div>
+          {JSON.stringify(global.user)}
+        </div>
+      ) : 'ой-ой'}
     </div>
   )
 }
