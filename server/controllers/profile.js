@@ -24,6 +24,7 @@ class ProfileController {
                     let profile = await Profile.findOne({user: user._id});
                     if(!profile) {
                         const newProfile = new Profile({
+                            user: user._id,
                             audio: `/uploads/${req.file.filename}`,
                             sex: req.body.sex,
                             mood: "happy",
