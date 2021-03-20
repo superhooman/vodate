@@ -62,7 +62,7 @@ const Index = () => {
       <div className="flex h-full flex-col justify-between items-start">
         <div>
           <svg className="h-8" viewBox="0 0 237 230" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-            <path className="logo-animate" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M13 87l109 131L225 72C185 7 151-5 122 37 94 78 57 95 13 87z" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <h1 className="font-bold text-3xl my-3">VoDate</h1>
           <p className="text-base opacity-70">{global.user.name}, добро пожаловать в VoDate! Здесь вы можете завести новые знакомства используя голос</p>
