@@ -1,28 +1,33 @@
-const express = require('express')
-const next = require('next')
+const path = require('path');
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env') });
 
-const port = parseInt(process.env.PORT, 10) || 3000
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const {
+  PORT, MONGO_URL
+} = process.env;
 
-app.prepare().then(() => {
-  const server = express()
+const mongoose = require('mongoose');
+const App = require('./server/app');
 
-  server.get('/a', (req, res) => {
-    return app.render(req, res, '/a', req.query)
-  })
+const app = new App({
+  port: PORT,
+  controllers: [
+  ],
+  middleWares: [
+    express.json()
+  ],
+  static: [
+    {
+      path: '/uploads',
+      folder: path.join(process.cwd(), 'uploads'),
+    },
+  ],
+});
 
-  server.get('/b', (req, res) => {
-    return app.render(req, res, '/b', req.query)
-  })
+mongoose.connect(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 
-  server.all('*', (req, res) => {
-    return handle(req, res)
-  })
-
-  server.listen(port, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${port}`)
-  })
-})
+app.listen();
