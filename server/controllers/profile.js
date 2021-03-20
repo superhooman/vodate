@@ -1,5 +1,6 @@
 const express = require("express");
 const Profile = require("../models/profile");
+const User = require('../models/user');
 const {sendError, errEnum} = require('../errors');
 const uploader = require("../utils/uploader");
 
