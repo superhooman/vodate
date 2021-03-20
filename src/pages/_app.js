@@ -6,7 +6,7 @@ import GlobalContext from "../utils/globalContext";
 import "../styles/index.css";
 
 const TEST = { "name": "Adam", "lastname": "Cosman", "sign": "6zGcrTgjus51UZjeLlE-B70HWJzuFoWgbRxAih7AHMI=", "id": "7c5bb714-8d14-11e9-9b32-465bcc60423b", "avatar": "https://media.aitu.btsdapps.net/api/v2/media/download/avatar/7d05a913-8d14-11e9-97e6-de0b7d6969f6", "avatarThumb": "https://media.aitu.btsdapps.net/api/v2/media/download/avatar/7d05a913-8d14-11e9-97e6-de0b7d6969f6?thumb" }
-const PROD = process.env.NODE_ENV === "production"
+const PROD = false // process.env.NODE_ENV === "production"
 
 const App = ({ Component, pageProps }) => {
     const router = useRouter();
