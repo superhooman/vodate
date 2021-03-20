@@ -63,6 +63,9 @@ const Index = () => {
       </svg>
       <h1 className="font-bold text-2xl">VoDate</h1>
       <p className="text-lg">{global.user.name}, добро пожаловать в VoDate!</p>
+      <code className="p-4 rounded bg-gray-100 text-black overflow-scroll">
+        {JSON.stringify(global.user)}
+      </code>
     </div>
   );
 };
