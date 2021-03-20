@@ -11,3 +11,16 @@
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
+
+.logo-animate{
+    animation: logo 2s ease-in-out infinite;
+}
+
+@keyframes logo{
+    0%, 100%{
+        d: path("M13 87l109 131L225 72C185 7 151-5 122 37 94 78 57 95 13 87z")
+    }
+    50%{
+        d: path("M13 80l109 131L225 65c-38 11-72-1-103-35C91-5 55 12 13 80z")
+    }
+}

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import Button from "../components/button";
 import GlobalContext from "../utils/globalContext";
 
 const Index = () => {
@@ -57,15 +58,17 @@ const Index = () => {
     );
   }
   return (
-    <div className="h-screen px-8 pt-32">
-      <svg className="h-24" viewBox="0 0 237 223" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-        <path d="M13 80l109 131L225 65c-38 11-72-1-103-35C91-5 55 12 13 80z" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-      <h1 className="font-bold text-2xl">VoDate</h1>
-      <p className="text-lg">{global.user.name}, добро пожаловать в VoDate!</p>
-      <code className="p-4 rounded bg-gray-100 text-black overflow-scroll">
-        {JSON.stringify(global.user)}
-      </code>
+    <div className="h-screen px-8 pt-32 pb-12">
+      <div className="flex h-full flex-col justify-between items-start">
+        <div>
+          <svg className="h-8" viewBox="0 0 237 230" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+            <path className="logo-animate" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <h1 className="font-bold text-3xl my-3">VoDate</h1>
+          <p className="text-base opacity-70">{global.user.name}, добро пожаловать в VoDate! Здесь вы можете завести новые знакомства используя голос</p>
+        </div>
+        <Button className="w-full">Войти</Button>
+      </div>
     </div>
   );
 };
