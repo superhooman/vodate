@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import GlobalContext from "../utils/globalContext";
 
 const Index = () => {
-  const [started, setStarted] = useState(false)
+  const [started, setStarted] = useState(false);
+  const [audio, setAudio] = useState("");
   const global = useContext(GlobalContext);
   const startAudio = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -19,8 +20,9 @@ const Index = () => {
         mediaRecorder.addEventListener("stop", () => {
           const audioBlob = new Blob(audioChunks);
           const audioUrl = URL.createObjectURL(audioBlob);
-          const audio = new Audio(audioUrl);
-          audio.play();
+          /*const audio = new Audio(audioUrl);
+          audio.play();*/
+          setAudio(audioUrl);
           setStarted(false)
         });
 
@@ -37,6 +39,9 @@ const Index = () => {
         </div>
       ) : 'ой-ой'}
       <button disabled={started} onClick={startAudio} className="py-4 px-12 text-center rounded bg-red-500 text-white disabled:opacity-50">{started ? '...' : "startAudio"}</button>
+      {audio ? <audio controls>
+  <source src={audio} type="audio/mpeg"/>
+</audio> : null}
     </div>
   )
 }
