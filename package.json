@@ -7,6 +7,7 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@btsd/aitu-bridge": "^0.2.1",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -16,5 +17,10 @@
     "react-dom": "^16.13.1",
     "yup": "^0.32.9"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.8",
+    "tailwindcss": "^2.0.4"
+  }
 }

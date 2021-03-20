@@ -1,18 +1,13 @@
-import Link from 'next/link'
+import { useContext } from "react";
+import GlobalContext from "../utils/globalContext";
 
-export default function Home() {
-  return (
-    <ul>
-      <li>
-        <Link href="/b" as="/a">
-          <a>a</a>
-        </Link>
-      </li>
-      <li>
-        <Link href="/a" as="/b">
-          <a>b</a>
-        </Link>
-      </li>
-    </ul>
+const Index = () => {
+  const global = useContext(GlobalContext)
+  return(
+    <div className="min-h-screen flex items-center justify-center">
+      {global.user ? global.user.name : 'ой-ой'}
+    </div>
   )
 }
+
+export default Index;
