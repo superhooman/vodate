@@ -23,6 +23,10 @@ const errors = {
     error: "request.form",
     code: 400,
   },
+  WRONG_ID: {
+    error: "request.id",
+    code: 400,
+  },
 };
 
 const errEnum = {
@@ -30,7 +34,8 @@ const errEnum = {
   WRONG_SESSION: "WRONG_SESSION",
   DEFAULT: "DEFAULT",
   FORM_ERROR: "FORM_ERROR",
-  WRONG_AUTH: "WRONG_AUTH"
+  WRONG_AUTH: "WRONG_AUTH",
+  WRONG_ID: "WRONG_ID"
 };
 
 const sendError = (req, res, error = "default", data = {}) => {
