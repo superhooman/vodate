@@ -37,7 +37,6 @@ const app = new App({
         maxAge: 1000 * 60 * 60 * 48,
         httpOnly: true,
         sameSite: 'lax', // csrf
-        secure: PROD, // cookie only works in https
       },
       saveUninitialized: false,
       secret: SESSION_SECRET,
