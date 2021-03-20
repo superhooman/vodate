@@ -38,7 +38,6 @@ const app = new App({
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: PROD, // cookie only works in https
-        domain: PROD ? DOMAIN : undefined,
       },
       saveUninitialized: false,
       secret: SESSION_SECRET,
