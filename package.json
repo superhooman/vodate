@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "DEBUG=errors,server nodemon --watch server index.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node index.js"
+    "start": "cross-env NODE_ENV=production DEBUG=errors,server node index.js"
   },
   "dependencies": {
     "@btsd/aitu-bridge": "^0.2.1",
@@ -17,6 +17,7 @@
     "express-session": "^1.17.1",
     "ioredis": "^4.24.2",
     "mongoose": "^5.12.1",
+    "multer": "^1.4.2",
     "next": "latest",
     "nodemon": "^2.0.7",
     "react": "^16.13.1",

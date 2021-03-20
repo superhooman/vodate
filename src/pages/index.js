@@ -62,7 +62,7 @@ const Index = () => {
         <path d="M13 80l109 131L225 65c-38 11-72-1-103-35C91-5 55 12 13 80z" strokeWidth="24" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
       <h1 className="font-bold text-2xl">VoDate</h1>
-      <p className="text-lg">{global.user}, добро пожаловать в VoDate!</p>
+      <p className="text-lg">{global.user.name}, добро пожаловать в VoDate!</p>
     </div>
   );
 };
