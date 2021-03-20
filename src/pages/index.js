@@ -1,12 +1,16 @@
+import axios from "axios";
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import Button from "../components/button";
 import GlobalContext from "../utils/globalContext";
 
 const Index = () => {
+  const router = useRouter()
   const [started, setStarted] = useState(false);
   const [audio, setAudio] = useState("");
   const global = useContext(GlobalContext);
-  const startAudio = () => {
+  const [loading, setLoading] = useState(false);
+  /* const startAudio = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       setStarted(true);
       const mediaRecorder = new MediaRecorder(stream);
@@ -20,8 +24,8 @@ const Index = () => {
       mediaRecorder.addEventListener("stop", () => {
         const audioBlob = new Blob(audioChunks);
         const audioUrl = URL.createObjectURL(audioBlob);
-        /*const audio = new Audio(audioUrl);
-          audio.play();*/
+        const audio = new Audio(audioUrl);
+          audio.play();
         setAudio(audioUrl);
         setStarted(false);
       });
@@ -30,7 +34,7 @@ const Index = () => {
         mediaRecorder.stop();
       }, 3000);
     });
-  };
+  }; */
   if (!global.user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -57,6 +61,18 @@ const Index = () => {
       </div>
     );
   }
+  const register = () => {
+    setLoading(true);
+    axios({
+      url: '/user/auth',
+      method: "POST",
+      data: global.user
+    }).then((res) => {
+      if(res.data && res.data.success){
+        router.push('/app');
+      }
+    })
+  }
   return (
     <div className="h-screen px-8 pt-32 pb-12">
       <div className="flex h-full flex-col justify-between items-start">
@@ -67,7 +83,7 @@ const Index = () => {
           <h1 className="font-bold text-3xl my-3">VoDate</h1>
           <p className="text-base opacity-70">{global.user.name}, добро пожаловать в VoDate! Здесь вы можете завести новые знакомства используя голос</p>
         </div>
-        <Button className="w-full">Войти</Button>
+        <Button disabled={loading} onClick={register} className="w-full">Войти</Button>
       </div>
     </div>
   );

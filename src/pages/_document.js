@@ -13,13 +13,9 @@ export default class MyDocument extends Document {
                     />
                     <meta name="format-detection" content="telephone=no" />
                     <meta name="msapplication-tap-highlight" content="no" />
-                    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-                    <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/assets/icon/favicon.png" />
-
                     <meta name="apple-mobile-web-app-capable" content="yes" />
                     <meta name="apple-mobile-web-app-title" content="VoDate" />
                     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-                    <title>VoDate</title>
                 </Head>
                 <body className="bg-white dark:bg-black text-gray-800 dark:text-white">
                     <Main />

@@ -22,7 +22,7 @@ class UserController {
                 if(!user){
                     const newUser = new User({
                         name: req.body.name,
-                        lastName: req.body.lastName,
+                        lastName: req.body.lastname,
                         avatar: req.body.avatar,
                         id: req.body.id
                     })
@@ -40,6 +40,7 @@ class UserController {
                 });
             }
         }catch(err){
+            console.log(err)
             return sendError(req, res, errEnum.WRONG_AUTH);
         }
     });
@@ -48,10 +49,30 @@ class UserController {
             return sendError(req, res, errEnum.FORM_ERROR);
         }
         const user = await User.findOne({id: req.body.id});
+        if(user){
+            req.session.user = {
+                avatar: user.avatar,
+                id: user.id,
+                name: user.name,
+                lastName: user.lastName,
+            };
+            return res.json({
+                success: true,
+                user
+            })
+        }
         return res.json({
-            success: !!user,
-            user
+            success: false
         })
+    })
+    this.router.get('/check', async (req, res) => {
+        if(req.session && req.session.user){
+            return res.json({
+                success: true
+            })
+        }else{
+            return sendError(req, res, errEnum.WRONG_SESSION)
+        }
     })
   }
 }
