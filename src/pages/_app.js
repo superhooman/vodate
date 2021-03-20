@@ -40,11 +40,9 @@ const App = ({ Component, pageProps }) => {
         });
     }, []);
     return (
-        <div className="bg-white dark:bg-black text-gray-800 dark:text-white">
-            <GlobalContext.Provider value={global}>
-                <Component {...pageProps} />
-            </GlobalContext.Provider>
-        </div>
+        <GlobalContext.Provider value={global}>
+            <Component {...pageProps} />
+        </GlobalContext.Provider>
     );
 };
 
