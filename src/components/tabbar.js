@@ -23,7 +23,9 @@ const TabBar = ({items = [
         href: '/app'
     }
 ]}) => (
-    <div className="fixed bottom-0 left-0 w-full px-8 py-2 flex justify-around border-t border-gray-500 dark:border-gray-700">
+    <div style={{
+      paddingBottom: `env(safe-area-inset-bottom)`
+    }} className="fixed bottom-0 left-0 w-full px-8 py-2 flex justify-around border-t border-gray-500 dark:border-gray-700">
         {items.map((link) => (
             <NavLink href={link.href} classNameActive="text-blue-500" className="p-2">
                 {link.icon}
