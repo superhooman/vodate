@@ -5,8 +5,10 @@ const express = require('express');
 const UserController = require('./server/controllers/user');
 
 const {
-  PORT, MONGO_URL, REDIS_URL, COOKIE_NAME, SESSION_SECRET, DOMAIN, PROD
+  PORT, MONGO_URL, REDIS_URL, COOKIE_NAME, SESSION_SECRET, DOMAIN
 } = process.env;
+
+const PROD = process.env.NODE_ENV === "production"
 
 const mongoose = require('mongoose');
 const Redis = require('ioredis');

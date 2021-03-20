@@ -40,7 +40,6 @@ class UserController {
                 });
             }
         }catch(err){
-            console.log(err)
             return sendError(req, res, errEnum.WRONG_AUTH);
         }
     });
@@ -71,6 +70,7 @@ class UserController {
                 success: true
             })
         }else{
+            console.log(`user: `, req.session.user)
             return sendError(req, res, errEnum.WRONG_SESSION)
         }
     })
