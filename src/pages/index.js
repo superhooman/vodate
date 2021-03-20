@@ -33,15 +33,19 @@ const Index = () => {
   }
   return (
     <div className="min-h-screen flex items-center flex-col justify-center">
-      {global.user ? (
-        <div>
-          {global.user.name}
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6">
+      <div className="block text-center mb-2">
+          {global.user ? global.user.name : 'ой-ой'}
         </div>
-      ) : 'ой-ой'}
-      <button disabled={started} onClick={startAudio} className="py-4 px-12 text-center rounded bg-red-500 text-white disabled:opacity-50">{started ? '...' : "startAudio"}</button>
-      {audio ? <audio controls>
+        <code className="block mb-8 w-full p-4 rounded bg-gray-200 overflow-scroll">
+          {JSON.stringify(global.user)}
+        </code>
+        <button disabled={started} onClick={startAudio} className="py-4 px-12 text-center mb-4 rounded bg-red-500 text-white disabled:opacity-50">{started ? '...' : "startAudio"}</button>
+      {audio ? (<audio controls>
   <source src={audio} type="audio/mpeg"/>
-</audio> : null}
+</audio>) : null}
+      </div>
+     
     </div>
   )
 }
