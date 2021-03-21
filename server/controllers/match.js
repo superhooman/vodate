@@ -68,7 +68,7 @@ class MatchController {
         if(exists && !exists.mutual && exists.inited !== user._id){
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
-            m.forEach((id) => {
+            m.forEach(async (id) => {
                 if(process.env.NODE_ENV !== "production"){
                     return;
                 }
