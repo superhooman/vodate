@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Audio from "../../components/audio";
 import Swipeable from "react-swipy";
 import Layout from "../../components/layout";
@@ -35,14 +35,14 @@ const App = () => {
     }));
   };
   useEffect(getItems, []);
-  const send = (dir) => {
+  const send = useCallback((dir) => {
     axios({
       url: `/match/${dir}`,
       params: {
         profile: list.items[0]._id
       }
     })
-  }
+  }, [list])
   if (list.isFetching) {
     return (
       <Layout className="flex items-center justify-center">
