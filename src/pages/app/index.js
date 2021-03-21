@@ -30,20 +30,16 @@ const App = () => {
     });
   };
   useEffect(getItems, []);
-  const send = (dir) => {
-    if(!ready){
-      return;
-    }
-    setReady(false)
+  const send = (dir, id) => {
     axios({
       url: `/match/${dir}`,
       params: {
-        profile: list.items[0]._id
+        profile: id
       }
     })
     setList((l) => ({
       isFetching: false,
-      items: l.items.slice(1, l.items.length - 1),
+      items: [...l.items].slice(1, l.items.length - 1),
     }));
   }
   if (list.isFetching) {
@@ -72,15 +68,15 @@ const App = () => {
       </Layout>
     );
   }
+  const item = list.items[0];
   return (
     <Layout className="flex items-stretch overflow-hidden">
-      {!ready ? <div className="fixed z-20 h-full w-full" /> : null}
       <div className="relative w-full">
       <h1 className="font-bold text-3xl text-center mb-4">Поиск</h1>
         {list.items.length > 0 ? (
           <div className="flex flex-col">
             <Swipeable
-              onSwipe={send}
+              onSwipe={(dir) => send(dir, item._id)}
               buttons={({ right, left }) => (
                 <div className="absolute w-full bottom-0 flex justify-between">
                   <Button color="bg-red-500" colorDark="bg-red-500" text="text-white" textDark="text-white" className="px-4 rounded-full" onClick={left}>
@@ -91,9 +87,6 @@ const App = () => {
                   </Button>
                 </div>
               )}
-              onAfterSwipe={() => {
-                setReady(true)
-              }}
             >
               <Card item={list.items[0]} />
             </Swipeable>

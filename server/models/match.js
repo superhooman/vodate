@@ -5,6 +5,10 @@ const matchSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }],
+  inited: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   mutual: {
       type: Boolean,
       default: false

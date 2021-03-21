@@ -60,7 +60,7 @@ class MatchController {
                 $in: [user._id, profile.user]
             }
         });
-        if(exists && !exists.mutual && exists.users[0] !== user._id){
+        if(exists && !exists.mutual && exists.inited !== user._id){
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
             m.forEach((id) => {
@@ -115,7 +115,8 @@ class MatchController {
             })
         }else{
             const match = new Match({
-                users: [user._id, profile.user]
+                users: [user._id, profile.user],
+                inited: user._id
             })
             await match.save()
             return res.json({
