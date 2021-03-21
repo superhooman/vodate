@@ -64,8 +64,8 @@ const App = ({ Component, pageProps }) => {
         const iPhone = /iPhone/.test(navigator.userAgent) && !window.MSStream
         const aspect = window.screen.width / window.screen.height
         const isX = (aspect.toFixed(3) === "0.462") && iPhone
-        setGlobal(global => ({
-            ...global,
+        setGlobal(g => ({
+            ...g,
             isX,
             iPhone
         }))
