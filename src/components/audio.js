@@ -18,9 +18,6 @@ const Audio = ({ src, id }) => {
     useEffect(() => {
         const el = document.getElementById(`audio_${id}`);
         if (el) {
-            el.addEventListener('canplaythrough', () => {
-                setReady(true);
-            })
             el.addEventListener('ended', () => {
                 setPlaying(false)
             })
@@ -30,7 +27,7 @@ const Audio = ({ src, id }) => {
         <>
             <audio style={{
                 display: 'none'
-            }} autoPlay={false} id={`audio_${id}`}>
+            }} onCanPlay={() => setReady(true)} autoPlay={false} id={`audio_${id}`}>
                 <source src={src} type="audio/wav" />
             </audio>
             <div className="flex items-center justify-center my-20">
