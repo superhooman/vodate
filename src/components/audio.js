@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const Audio = ({ src, id }) => {
-    const [ready, setReady] = useState(false);
+    const [ready, setReady] = useState(true);
     const [playing, setPlaying] = useState(false);
     const playAudio = () => {
         const el = document.getElementById(`audio_${id}`);
@@ -27,12 +27,14 @@ const Audio = ({ src, id }) => {
         <>
             <audio style={{
                 display: 'none'
-            }} onCanPlayThrough={() => setReady(true)} autoPlay={false} id={`audio_${id}`}>
+            }} 
+            //onCanPlayThrough={() => setReady(true)}
+            autoPlay={false} id={`audio_${id}`}>
                 <source src={src} type="audio/wav" />
             </audio>
             <div className="flex items-center justify-center my-20">
                 <button onClick={playAudio} disabled={!ready} className={`absolute shadow-lg focus:outline-none transition transform active:scale-95 h-32 w-32 flex items-center justify-center rounded-full ${playing ? 'bg-red-500 text-white' : 'border-red-500 text-red-500 border-4'}`}>
-                    {ready ? <svg xmlns="http://www.w3.org/2000/svg" className="-mr-1" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> : (<svg
+                    {ready ? (playing ? <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> : <svg xmlns="http://www.w3.org/2000/svg" className="-mr-1" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>) : (<svg
                         className="animate-spin h-8 w-8"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

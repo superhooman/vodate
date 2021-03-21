@@ -1,9 +1,40 @@
 const express = require("express");
 const Profile = require("../models/profile");
+const path = require("path")
 const User = require('../models/user');
 const { sendError, errEnum } = require('../errors');
 const uploader = require("../utils/uploader");
 const auth = require("../utils/auth");
+const axios = require("axios");
+
+const getMood = (file) => new Promise((resolve, reject) => {
+    const moodMap = {
+        sad: 'sad',
+        fear: 'sad',
+        happy: 'happy',
+        angry: 'happy',
+        surprise: 'happy',
+        disgust: 'sad',
+        calm: 'neutral',
+        neutral: 'neutral'
+    }
+    if(process.env.NODE_ENV !== "production"){
+        return resolve('neutral');
+    }
+    axios({
+        url: 'http://localhost:5000/predict',
+        params: {
+            path: path.join(process.cwd(), file)
+        }
+    }).then((res) => {
+        if(res.data && res.data.Result){
+            return resolve(moodMap[res.data.Result] || 'netural')
+        }
+    }).catch(err => {
+        console.log(err);
+        resolve('neutral')
+    })
+})
 
 class ProfileController {
     constructor() {
@@ -49,19 +80,20 @@ class ProfileController {
                 return sendError(req, res, errEnum.FORM_ERROR);
             }
             try {
+                const mood = await getMood(`/uploads/${req.file.filename}`);
                 const user = await User.findOne({ id: req.session.user.id });
                 let profile = await Profile.findOne({ user: user._id });
                 if (!profile) {
                     const newProfile = new Profile({
                         audio: `/uploads/${req.file.filename}`,
-                        mood: "happy",
+                        mood: mood,
                         user: user._id
                     });
                     profile = await newProfile.save();
                 } else {
                     profile = await Profile.findByIdAndUpdate(profile._id, {
                         audio: `/uploads/${req.file.filename}`,
-                        mood: "happy"
+                        mood: mood
                     }, {
                         new: true
                     });

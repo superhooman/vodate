@@ -5,6 +5,12 @@ import Swipeable from "react-swipy";
 import Layout from "../../components/layout";
 import Button from "../../components/button";
 
+const moods = {
+    happy: 'Пользователь кажется радостым c:',
+    sad: 'Пользователь кажется грустным, подбодрите его',
+    neutral: 'Пользователь нейтрален'
+}
+
 const App = () => {
   const [list, setList] = useState({
     isFetching: true,
@@ -106,7 +112,9 @@ const Card = ({ item, style }) => (
         {item.user.name} {item.user.lastName}
       </span>
     </div>
+    
     <Audio src={item.audio} id={item._id} />
+    <span className="block text-sm font-semibold text-center opacity-60">{moods[item.mood]}</span>
   </div>
 );
 
