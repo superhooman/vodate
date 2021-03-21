@@ -92,7 +92,7 @@ const Add = () => {
                 <source src={audio} type="audio/wav"/>
             </audio> : null}
             <div>
-                {!iPhone ? (<div className="bg-red-500 text-white text-xs leading-tight py-4 px-8 text-center rounded mb-2">
+                {!iPhone ? (<div className="bg-red-500 text-white text-xs leading-tight p-4 text-center rounded mb-2">
                     У пользовалетелй Android может не работать микрофон. К сожалению проблему могут исправить только разработчики aitu.
                 </div>) : null}
                 <h1 className="font-bold text-2xl text-center mb-2">
@@ -143,7 +143,7 @@ const Add = () => {
             </div>
             <div>
                 {audio ? <Button onClick={startAudio} disabled={!(process === TIME || process === 0)} color="bg-red-500" colorDark="bg-red-500" text="text-white" textDark="text-white" className="w-full">Перезаписать</Button> : null}
-                <Button onClick={send} disabled={!audio || sending} color="bg-blue-500" colorDark="bg-blue-500" text="text-white" textDark="text-white" className="w-full mt-4">Сохранить</Button>
+                {blob ? <Button onClick={send} disabled={!audio || sending} color="bg-blue-500" colorDark="bg-blue-500" text="text-white" textDark="text-white" className="w-full mt-4">Сохранить</Button> : null}
                 {!iPhone ? <Link href="/app"><Button className="w-full mt-4">Назад</Button></Link> : null}
             </div>
         </div>

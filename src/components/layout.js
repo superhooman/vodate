@@ -25,7 +25,7 @@ const TabItem = (link) => (
   <NavLink href={link.href} classNameActive="text-blue-500" className={`p-2 relative flex flex-col items-center justify-center flex-1 transform active:scale-95 ${link.className}`}>
     {link.icon}
     <span className="text-xs font-bold mt-1 uppercase">{link.label}</span>
-    {link.count ? <div className="absolute top-0 -mr-8 text-xs bg-blue-500 text-white font-bold  py-1 px-2 leading-tight rounded-full">{link.count}</div> : null}
+    {link.count ? <div className="absolute top-0 ml-6 text-xs bg-blue-500 text-white font-bold  py-1 px-2 leading-tight rounded-full">{link.count}</div> : null}
   </NavLink>
 )
 

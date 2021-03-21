@@ -33,6 +33,12 @@ const App = () => {
     });
   };
   useEffect(getItems, []);
+  useEffect(() => {
+    document.body.classList.add('stop');
+    return () => {
+      document.body.classList.remove('stop')
+    }
+  },[])
   const send = (dir, id) => {
     axios({
       url: `/match/${dir}`,

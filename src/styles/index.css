@@ -1,4 +1,8 @@
 body {
+    touch-action: pan-x pan-y;
+}
+
+body.stop{
     touch-action: pan-x;
 }
 
