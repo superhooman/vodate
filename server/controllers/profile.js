@@ -50,7 +50,16 @@ class ProfileController {
             const user = await User.findOne({ id: req.session.user.id });
             const left = await Left.findOne({user: user._id});
             const matches = await Match.find({
-                users: user._id
+                $or: [
+                    {
+                        users: user._id,
+                        inited: user._id
+                    },
+                    {
+                        users: user._id,
+                        mutual: true
+                    }
+                ]
             })
             const profiles = await Profile.find({user: {
                 $nin: [
