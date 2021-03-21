@@ -35,11 +35,11 @@ const App = () => {
     }));
   };
   useEffect(getItems, []);
-  const send = (dir, id) => {
+  const send = (dir) => {
     axios({
       url: `/match/${dir}`,
       params: {
-        profile: id
+        profile: list.items[0]._id
       }
     })
   }
@@ -76,9 +76,7 @@ const App = () => {
         {list.items.length > 0 ? (
           <div className="flex flex-col">
             <Swipeable
-              onSwipe={(e) => {
-                send(e, list.items[0]._id)
-              }}
+              onSwipe={send}
               buttons={({ right, left }) => (
                 <div className="absolute w-full bottom-0 flex justify-between">
                   <Button color="bg-red-500" colorDark="bg-red-500" text="text-white" textDark="text-white" className="px-4 rounded-full" onClick={left}>
