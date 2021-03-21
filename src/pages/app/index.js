@@ -39,7 +39,7 @@ const App = () => {
     })
     setList((l) => ({
       isFetching: false,
-      items: [...l.items].slice(1, l.items.length - 1),
+      items: [...l.items].slice(1, l.items.length),
     }));
   }
   if (list.isFetching) {
