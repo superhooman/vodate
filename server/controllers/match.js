@@ -56,7 +56,14 @@ class MatchController {
         }
         const user = await User.findOne({id: req.session.user.id});
         const exists = await Match.findOne({
-            users: [user._id, profile.user]
+            $or:[
+                {
+                    users: [user._id, profile.user]
+                },
+                {
+                    users: [profile.user, user._id]
+                }
+            ]
         });
         if(exists && !exists.mutual && exists.inited !== user._id){
             //todo: send push
