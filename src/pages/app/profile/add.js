@@ -97,6 +97,7 @@ const Add = () => {
                 <p className="text-sm opacity-70 text-center leading-tight ">Нажмите на кнопку и запишите свою анкету. Вам будет дано {TIME} секунд, постарайтесь уместиться :D</p>
                 <div className="flex items-center justify-center my-20">
                     <button
+                        disabled={started}
                         onClick={audio ? playPause : startAudio}
                         className={`relative transition focus:outline-none transform active:scale-95 h-32 w-32 flex items-center justify-center rounded-full ${(started) || (audio && process) ? "bg-red-500 text-white" : "border-red-500 border-4 text-red-500"
                             }`}
