@@ -55,7 +55,7 @@ const Matches = () => {
             <h1 className="font-bold text-3xl text-center mb-4">Пары</h1>
             <div className="divide-y divide-gray-300 dark:divide-gray-700">
                 {matches.items.map((el) => (
-                    <a className="flex items-center w-full mb-2" href={`https://i2.app.link/open_chat_with?user_id=${el.id}`}>
+                    <a className="flex items-center w-full py-2" href={`https://i2.app.link/open_chat_with?user_id=${el.id}`}>
                         <div
                             style={{ backgroundImage: `url(${el.avatar})` }}
                             className="w-12 h-12 flex-none rounded-full bg-cover bg-center bg-gray-500"
