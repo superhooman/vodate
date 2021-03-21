@@ -1,6 +1,9 @@
 const secretKey = process.env.APIKEY
 
 const isValidSign = (fullBridgeResponse) => {
+    if(process.env.NODE_ENV !== "production"){
+        return true;
+    }
     if (
         typeof fullBridgeResponse !== 'string' && typeof fullBridgeResponse !== 'object'
         || typeof secretKey !== 'string'

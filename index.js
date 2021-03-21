@@ -14,6 +14,7 @@ const App = require('./server/app');
 
 const UserController = require('./server/controllers/user');
 const ProfileController = require('./server/controllers/profile');
+const MatchController = require('./server/controllers/match');
 
 const RedisStore = connectRedis(session);
 const redisClient = new Redis(REDIS_URL);
@@ -22,7 +23,8 @@ const app = new App({
   port: PORT,
   controllers: [
     new UserController(),
-    new ProfileController()
+    new ProfileController(),
+    new MatchController()
   ],
   middleWares: [
     express.json(),

@@ -66,7 +66,7 @@ const Profile = () => {
 
     return (
         <Layout className="flex flex-col justify-between">
-            <h1 className="font-bold text-4xl">Анкета</h1>
+            <h1 className="font-bold text-3xl text-center">Анкета</h1>
             <Audio src={profile.data.audio} id="profile" />
             <div>
                 <Button onClick={remove} color="bg-red-500" colorDark="bg-red-500" text="text-white" textDark="text-white" className="w-full">Удалить анкету</Button>

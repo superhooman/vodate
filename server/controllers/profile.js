@@ -2,6 +2,8 @@ const express = require("express");
 const Profile = require("../models/profile");
 const path = require("path")
 const User = require('../models/user');
+const Match = require('../models/match');
+const Left = require('../models/left');
 const { sendError, errEnum } = require('../errors');
 const uploader = require("../utils/uploader");
 const auth = require("../utils/auth");
@@ -45,10 +47,20 @@ class ProfileController {
 
     initRoutes() {
         this.router.get('/list', auth, async (req, res) => {
-            const profiles = await Profile.find({}).populate('user');
+            const user = await User.findOne({ id: req.session.user.id });
+            const left = await Left.findOne({user: user._id});
+            const matches = await Match.find({
+                users: user._id
+            })
+            const profiles = await Profile.find({user: {
+                $nin: [
+                    ...(left ? left.users : []),
+                    ...(matches.length > 0 ? [...matches.flatMap(el => el.users)] : [])
+                ]
+            }}).populate('user');
             return res.json({
                 success: true,
-                profiles: [...profiles, ...profiles, ...profiles]
+                profiles
             })
         })
         this.router.delete('/', auth, async (req, res) => {

@@ -16,7 +16,6 @@ const App = () => {
     isFetching: true,
     items: [],
   });
-  const [position, setPosition] = useState(0);
   const getItems = () => {
     axios({
       url: "/profile/list",
@@ -36,6 +35,14 @@ const App = () => {
     }));
   };
   useEffect(getItems, []);
+  const send = (dir, id) => {
+    axios({
+      url: `/match/${dir}`,
+      params: {
+        profile: id
+      }
+    })
+  }
   if (list.isFetching) {
     return (
       <Layout className="flex items-center justify-center">
@@ -65,12 +72,12 @@ const App = () => {
   return (
     <Layout className="flex items-stretch overflow-hidden">
       <div className="relative w-full">
-      <h1 className="font-bold text-4xl text-center mb-4">Поиск</h1>
+      <h1 className="font-bold text-3xl text-center mb-4">Поиск</h1>
         {list.items.length > 0 ? (
           <div className="flex flex-col">
             <Swipeable
               onSwipe={(e) => {
-                    console.log(e)
+                send(e, list.items[0]._id)
               }}
               buttons={({ right, left }) => (
                 <div className="absolute w-full bottom-0 flex justify-between">

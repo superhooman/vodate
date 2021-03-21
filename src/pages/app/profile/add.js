@@ -5,7 +5,7 @@ import Recorder from 'recorder-js';
 import Button from '../../../components/button';
 import GlobalContext from "../../../utils/globalContext";
 
-const TIME = 5
+const TIME = 20
 
 const Add = () => {
     const router = useRouter()
