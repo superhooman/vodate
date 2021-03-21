@@ -95,22 +95,18 @@ class MatchController {
                 const hmac = require('crypto').createHmac('sha256', process.env.APIKEY);
                 const base64URLUnsafeHash = hmac.update(makeStringToHash(data)).digest('base64');
                 const calculatedSign = base64URLUnsafeHash.replace(/\+/g, '-').replace(/\//g, '_');
-                try{
-                    axios({
-                        url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
-                        method: 'POST',
-                        data: {
-                            ...data,
-                            sign: calculatedSign
-                        }
-                    }).then((res) => {
-                        console.log(res)
-                    }).catch(err => {
-                        console.log(err)
-                    })
-                }catch(err){
+                await axios({
+                    url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
+                    method: 'POST',
+                    data: {
+                        ...data,
+                        sign: calculatedSign
+                    }
+                }).then((res) => {
+                    console.log(res)
+                }).catch(err => {
                     console.log(err)
-                }
+                })
             })
             exists.mutual = true;
             await exists.save();
