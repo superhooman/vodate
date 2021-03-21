@@ -91,7 +91,9 @@ const App = () => {
                   </Button>
                 </div>
               )}
-              onAfterSwipe={() => setReady(true)}
+              onAfterSwipe={() => {
+                setReady(true)
+              }}
             >
               <Card item={list.items[0]} />
             </Swipeable>

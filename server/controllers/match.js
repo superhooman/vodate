@@ -30,7 +30,7 @@ class MatchController {
         let left = await Left.findOne({user: user._id});
         if(!left){
             left = await (new Left({
-                user: user_id,
+                user: user._id,
                 users: []
             })).save()
         }
@@ -60,7 +60,7 @@ class MatchController {
                 $in: [user._id, profile.user]
             }
         });
-        if(exists){
+        if(exists && !exists.mutual && exists.users[0] !== user._id){
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
             m.forEach((id) => {
