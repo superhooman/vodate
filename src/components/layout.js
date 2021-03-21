@@ -22,9 +22,10 @@ const NavLink = ({
 };
 
 const TabItem = (link) => (
-  <NavLink href={link.href} classNameActive="text-blue-500" className={`p-2 flex flex-col items-center justify-center flex-1 transform active:scale-95 ${link.className}`}>
+  <NavLink href={link.href} classNameActive="text-blue-500" className={`p-2 relative flex flex-col items-center justify-center flex-1 transform active:scale-95 ${link.className}`}>
     {link.icon}
     <span className="text-xs font-bold mt-1 uppercase">{link.label}</span>
+    {link.count ? <div className="absolute top-0 -mr-8 text-xs bg-blue-500 text-white font-bold  py-1 px-2 leading-tight rounded-full">{link.count}</div> : null}
   </NavLink>
 )
 
@@ -49,7 +50,7 @@ const Layout = ({ className = "", children }) => {
         axios({
             url: '/user/check'
         }).catch(() => {
-            router.push('/')
+            router.push('/');
         })
     }, [])
   return(
@@ -62,7 +63,7 @@ const Layout = ({ className = "", children }) => {
           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke="currentColor" fill="inherit" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
         </NavLink>
       </div>
-      <TabItem {...matches} />
+      <TabItem {...matches} count={global.count} />
     </TabBar>
   </div>
 )}

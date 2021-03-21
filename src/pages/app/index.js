@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Audio from "../../components/audio";
 import Swipeable from "react-swipy";
 import Layout from "../../components/layout";
 import Button from "../../components/button";
+import GlobalContext from "../../utils/globalContext";
 
 const moods = {
     happy: 'Пользователь кажется радостым c:',
@@ -16,8 +17,10 @@ const App = () => {
     isFetching: true,
     items: [],
   });
+  const {getCount} = useContext(GlobalContext)
   const [ready, setReady] = useState(true);
   const getItems = () => {
+    getCount()
     axios({
       url: "/profile/list",
     }).then((res) => {
@@ -36,11 +39,9 @@ const App = () => {
       params: {
         profile: id
       }
+    }).then(() => {
+      getCount()
     })
-    setList((l) => ({
-      isFetching: false,
-      items: [...l.items].slice(1, l.items.length),
-    }));
   }
   if (list.isFetching) {
     return (
@@ -69,6 +70,7 @@ const App = () => {
     );
   }
   const item = list.items[0];
+  const next = list.items.length > 1 ? list.items[1] : null;
   return (
     <Layout className="flex items-stretch overflow-hidden">
       <div className="relative w-full">
@@ -87,11 +89,15 @@ const App = () => {
                   </Button>
                 </div>
               )}
+              onAfterSwipe={() => setList((l) => ({
+                isFetching: false,
+                items: [...l.items].slice(1, l.items.length),
+              }))}
             >
               <Card item={list.items[0]} />
             </Swipeable>
-            {list.items.length > 1 && (
-              <Card style={{ zIndex: -1 }} item={list.items[1]} />
+            {next && (
+              <Card style={{ zIndex: -1 }} item={next} />
             )}
           </div>
         ) : <div className="flex h-full items-center justify-center">

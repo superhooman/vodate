@@ -15,7 +15,22 @@ const App = ({ Component, pageProps }) => {
         user: PROD ? null : TEST,
         isX: false,
         iPhone: false,
+        count: 0
     });
+    const getCount = () => {
+        axios({
+            url: "/match/myCount",
+        }).then((res) => {
+            if(res.data && res.data.success){
+                setGlobal({
+                    ...global,
+                    count: res.data.matches
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
     const getMe = async () => {
         try {
             const data = await aituBridge.getMe();
@@ -38,6 +53,7 @@ const App = ({ Component, pageProps }) => {
             }).then((res) => {
                 if (res.data && res.data.success) {
                     router.push("/app");
+                    getCount()
                 }
             }).catch((err) => {
                 console.log(err)
@@ -55,7 +71,10 @@ const App = ({ Component, pageProps }) => {
         }))
     }, [])
     return (
-        <GlobalContext.Provider value={global}>
+        <GlobalContext.Provider value={{
+            ...global,
+            getCount
+        }}>
             <Component {...pageProps} />
         </GlobalContext.Provider>
     );

@@ -126,6 +126,20 @@ class MatchController {
             })
         }
     })
+    this.router.get('/myCount', async (req, res) => {
+        if(!req.session.user){
+            return sendError(req, res, errEnum.WRONG_SESSION);
+        }
+        const user = await User.findOne({id: req.session.user.id})
+        const matches = await Match.count({
+            users: user._id,
+            mutual: true
+        })
+        return res.json({
+            success: true,
+            matches
+        })
+    })
     this.router.get('/my', async (req, res) => {
         if(!req.session.user){
             return sendError(req, res, errEnum.WRONG_SESSION);
