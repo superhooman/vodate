@@ -63,7 +63,7 @@ class MatchController {
         if(exists){
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
-            m.forEach(async (id) => {
+            m.forEach((id) => {
                 const data = {
                     locale: 1,
                     message: 'У вас новая пара',
@@ -87,18 +87,22 @@ class MatchController {
                 const hmac = require('crypto').createHmac('sha256', process.env.APIKEY);
                 const base64URLUnsafeHash = hmac.update(makeStringToHash(data)).digest('base64');
                 const calculatedSign = base64URLUnsafeHash.replace(/\+/g, '-').replace(/\//g, '_');
-                await axios({
-                    url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
-                    method: 'POST',
-                    data: {
-                        ...data,
-                        sign: calculatedSign
-                    }
-                }).then((res) => {
-                    console.log(res)
-                }).catch(err => {
+                try{
+                    axios({
+                        url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
+                        method: 'POST',
+                        data: {
+                            ...data,
+                            sign: calculatedSign
+                        }
+                    }).then((res) => {
+                        console.log(res)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }catch(err){
                     console.log(err)
-                })
+                }
             })
             exists.mutual = true;
             await exists.save();
