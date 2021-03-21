@@ -55,7 +55,8 @@ class ProfileController {
             const profiles = await Profile.find({user: {
                 $nin: [
                     ...(left ? left.users : []),
-                    ...(matches.length > 0 ? [...matches.flatMap(el => el.users)] : [])
+                    ...(matches.length > 0 ? [...matches.flatMap(el => el.users)] : []),
+                    user._id
                 ]
             }}).populate('user');
             return res.json({
