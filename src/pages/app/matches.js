@@ -51,7 +51,8 @@ const Matches = () => {
         );
     }
     return (
-        <Layout>
+        <Layout className="min-h-screen flex items-stretch">
+            <div className="w-full">
             <h1 className="font-bold text-3xl text-center mb-4">Пары</h1>
             <div className="divide-y divide-gray-300 dark:divide-gray-700">
                 {matches.items.map((el) => (
@@ -66,9 +67,10 @@ const Matches = () => {
                     </a>
                 ))}
             </div>
-            {matches.items.length === 0 ? <div className="flex my-24 items-center justify-center">
+            {matches.items.length === 0 ? <div className="flex h-full items-center justify-center">
                 <span className="opacity-50 text-lg">Пусто</span>
             </div> : null}
+            </div>
         </Layout>
     )
 }
