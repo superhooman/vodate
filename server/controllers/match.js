@@ -63,42 +63,43 @@ class MatchController {
         if(exists){
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
-            await (new Promise((res) => {
-                m.forEach(async (id) => {
-                    const data = {
-                        locale: 1,
-                        message: 'У вас новая пара',
-                        title: 'VoDate',
-                        app_id: '2d02e55c-896c-11eb-a224-6ac7ec087d2d',
-                        user_id: id
+            m.forEach(async (id) => {
+                const data = {
+                    locale: 1,
+                    message: 'У вас новая пара',
+                    title: 'VoDate',
+                    app_id: '2d02e55c-896c-11eb-a224-6ac7ec087d2d',
+                    user_id: id
+                }
+                function makeStringToHash(input) {
+                    if (Array.isArray(input)) {
+                        return input.map(makeStringToHash).join('');
+                    } else if (typeof input === 'object') {
+                        return Object.keys(input)
+                            .filter((key) => input[key] && (!Array.isArray(input[key]) || input[key].length > 0) && (typeof input[key] !== 'object' || Object.keys(input[key]).length > 0))
+                            .sort()
+                            .map((key) => `${key}:${makeStringToHash(input[key])}`)
+                            .join('');
+                    } else {
+                        return String(input);
                     }
-                    function makeStringToHash(input) {
-                        if (Array.isArray(input)) {
-                            return input.map(makeStringToHash).join('');
-                        } else if (typeof input === 'object') {
-                            return Object.keys(input)
-                                .filter((key) => input[key] && (!Array.isArray(input[key]) || input[key].length > 0) && (typeof input[key] !== 'object' || Object.keys(input[key]).length > 0))
-                                .sort()
-                                .map((key) => `${key}:${makeStringToHash(input[key])}`)
-                                .join('');
-                        } else {
-                            return String(input);
-                        }
+                }
+                const hmac = require('crypto').createHmac('sha256', process.env.APIKEY);
+                const base64URLUnsafeHash = hmac.update(makeStringToHash(data)).digest('base64');
+                const calculatedSign = base64URLUnsafeHash.replace(/\+/g, '-').replace(/\//g, '_');
+                await axios({
+                    url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
+                    method: 'POST',
+                    data: {
+                        ...data,
+                        sign: calculatedSign
                     }
-                    const hmac = require('crypto').createHmac('sha256', process.env.APIKEY);
-                    const base64URLUnsafeHash = hmac.update(makeStringToHash(data)).digest('base64');
-                    const calculatedSign = base64URLUnsafeHash.replace(/\+/g, '-').replace(/\//g, '_');
-                    await axios({
-                        url: 'https://api.miniapps.aitu.io/kz.btsd.messenger.apps.public.MiniAppsPublicService/SendPush',
-                        method: 'POST',
-                        data: {
-                            ...data,
-                            sign: calculatedSign
-                        }
-                    })
-                    return res()
+                }).then((res) => {
+                    console.log(res)
+                }).catch(err => {
+                    console.log(err)
                 })
-            }))
+            })
             exists.mutual = true;
             await exists.save();
             return res.json({
