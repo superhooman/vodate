@@ -28,12 +28,6 @@ const App = () => {
       }
     });
   };
-  const remove = () => {
-    setList((l) => ({
-      isFetching: false,
-      items: l.items.slice(1, l.items.length),
-    }));
-  };
   useEffect(getItems, []);
   const send = useCallback((dir) => {
     axios({
@@ -42,6 +36,10 @@ const App = () => {
         profile: list.items[0]._id
       }
     })
+    setList((l) => ({
+      isFetching: false,
+      items: l.items.slice(1, l.items.length),
+    }));
   }, [list])
   if (list.isFetching) {
     return (
@@ -87,7 +85,7 @@ const App = () => {
                   </Button>
                 </div>
               )}
-              onAfterSwipe={remove}
+              onAfterSwipe={() => console.log()}
             >
               <Card item={list.items[0]} />
             </Swipeable>
