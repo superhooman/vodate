@@ -48,7 +48,7 @@ class UserController {
         if(!req.query.id){
             return sendError(req, res, errEnum.FORM_ERROR);
         }
-        const user = await User.findOne({id: req.body.id});
+        const user = await User.findOne({id: req.query.id});
         if(user){
             req.session.user = {
                 avatar: user.avatar,
