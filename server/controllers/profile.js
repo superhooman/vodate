@@ -13,6 +13,25 @@ class ProfileController {
     }
 
     initRoutes() {
+        this.router.get('/list', auth, async (req, res) => {
+            const profiles = await Profile.find({}).populate('user');
+            return res.json({
+                success: true,
+                profiles: [...profiles, ...profiles, ...profiles]
+            })
+        })
+        this.router.delete('/', auth, async (req, res) => {
+            const user = await User.findOne({ id: req.session.user.id });
+            if (!user) {
+                res.session.destroy();
+                return sendError(req, res, errEnum.WRONG_SESSION)
+            }
+            const profile = await Profile.findOne({ user: user._id });
+            profile.remove();
+            return res.json({
+                success: true,
+            })
+        })
         this.router.get('/', auth, async (req, res) => {
             const user = await User.findOne({ id: req.session.user.id });
             if (!user) {

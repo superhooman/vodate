@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import axios from "axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Link from 'next/link';
 import TabBar from './tabbar';
+import GlobalContext from '../utils/globalContext';
 
 const NavLink = ({
   href, children, className, classNameActive, ...rest
@@ -43,6 +44,7 @@ const matches = {
 
 const Layout = ({ className = "", children }) => {
   const router = useRouter();
+  const global = useContext(GlobalContext)
     useEffect(() => {
         axios({
             url: '/user/check'
@@ -51,7 +53,7 @@ const Layout = ({ className = "", children }) => {
         })
     }, [])
   return(
-  <div className={`h-screen p-6 relative pb-28 ${className}`}>
+  <div className={`min-h-screen p-6 relative ${global.isX ? 'pb-32' : 'pb-28'} ${className}`}>
     {children}
     <TabBar>
       <TabItem {...profile} />

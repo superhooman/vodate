@@ -84,7 +84,7 @@ const Add = () => {
         })
     }
     return (
-        <div className="p-8 h-screen flex flex-col justify-between">
+        <div className="p-8 min-h-screen flex flex-col justify-between">
             {audio ? <audio style={{
                 display: 'none'
             }} autoPlay={false} id="audioRecording">

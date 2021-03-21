@@ -71,6 +71,8 @@ const Index = () => {
       if(res.data && res.data.success){
         router.push('/app');
       }
+    }).finally(() => {
+      setLoading(false);
     })
   }
   return (
