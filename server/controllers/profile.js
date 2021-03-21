@@ -35,8 +35,8 @@ class ProfileController {
                 if (!profile) {
                     const newProfile = new Profile({
                         audio: `/uploads/${req.file.filename}`,
-                        sex: req.body.sex,
                         mood: "happy",
+                        user: user._id
                     });
                     profile = await newProfile.save();
                 } else {
@@ -52,6 +52,7 @@ class ProfileController {
                     profile
                 });
             } catch (err) {
+                console.log(err)
                 return sendError(req, res, errEnum.DEFAULT);
             }
         })

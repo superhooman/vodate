@@ -41,7 +41,7 @@ const matches = {
   className: 'transition'
 }
 
-const Layout = ({ children }) => {
+const Layout = ({ className = "", children }) => {
   const router = useRouter();
     useEffect(() => {
         axios({
@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
         })
     }, [])
   return(
-  <div className="h-screen p-6 relative">
+  <div className={`h-screen p-6 relative pb-28 ${className}`}>
     {children}
     <TabBar>
       <TabItem {...profile} />

@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-const sex = {
-    MALE: 'male',
-    FEMALE: 'female'
-}
-
 const moods = {
     HAPPY: 'happy',
     NEUTRAL: 'neutral',
@@ -18,11 +13,6 @@ const profileSchema = new mongoose.Schema({
   },
   audio: {
       type: String,
-      required: true
-  },
-  sex: {
-      type: String,
-      enums: Object.values(sex),
       required: true
   },
   mood: {
