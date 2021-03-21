@@ -53,6 +53,7 @@ class MatchController {
         if(!req.session.user){
             return sendError(req, res, errEnum.WRONG_SESSION);
         }
+        const user = await User.findOne({id: req.session.user.id})
         const matches = await Match.findOne({
             users: user._id
         });
