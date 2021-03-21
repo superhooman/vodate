@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import Recorder from 'recorder-js';
+import Link from 'next/link'
 import Button from '../../../components/button';
 import GlobalContext from "../../../utils/globalContext";
 
@@ -11,7 +12,7 @@ const Add = () => {
     const router = useRouter()
     const [audio, setAudio] = useState("");
     const [blob, setBlob] = useState(null);
-    const {user} = useContext(GlobalContext);
+    const {user, iPhone} = useContext(GlobalContext);
     const [started, setStarted] = useState(false);
     const [process, setProcess] = useState(0);
     const [sending, setSending] = useState(false);
@@ -91,10 +92,13 @@ const Add = () => {
                 <source src={audio} type="audio/wav"/>
             </audio> : null}
             <div>
+                {!iPhone ? (<div className="bg-red-500 text-white text-xs leading-tight py-4 px-8 text-center rounded mb-2">
+                    У пользовалетелй Android может не работать микрофон. К сожалению проблему могут исправить только разработчики aitu.
+                </div>) : null}
                 <h1 className="font-bold text-2xl text-center mb-2">
                     Запишите свою анкету
                 </h1>
-                <p className="text-sm opacity-70 text-center leading-tight ">Нажмите на кнопку и запишите свою анкету. Вам будет дано {TIME} секунд, постарайтесь уместиться :D</p>
+                <p className="text-sm opacity-70 text-center leading-tight">Нажмите на кнопку и запишите свою анкету. Вам будет дано {TIME} секунд, постарайтесь уместиться :D</p>
                 <div className="flex items-center justify-center my-20">
                     <button
                         disabled={started}
@@ -140,6 +144,7 @@ const Add = () => {
             <div>
                 {audio ? <Button onClick={startAudio} disabled={!(process === TIME || process === 0)} color="bg-red-500" colorDark="bg-red-500" text="text-white" textDark="text-white" className="w-full">Перезаписать</Button> : null}
                 <Button onClick={send} disabled={!audio || sending} color="bg-blue-500" colorDark="bg-blue-500" text="text-white" textDark="text-white" className="w-full mt-4">Сохранить</Button>
+                {!iPhone ? <Link href="/app"><Button className="w-full mt-4">Назад</Button></Link> : null}
             </div>
         </div>
     );

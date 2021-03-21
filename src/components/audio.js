@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const Audio = ({ src, id, className = "" }) => {
+    const audio = useRef()
     const [ready, setReady] = useState(true);
     const [playing, setPlaying] = useState(false);
     const playAudio = () => {
-        const el = document.getElementById(`audio_${id}`);
-        if (el) {
+        const el = audio.current;
+        if (el && el.pause) {
             if (el.paused) {
                 el.play();
                 setPlaying(true)
@@ -15,17 +16,28 @@ const Audio = ({ src, id, className = "" }) => {
             }
         }
     }
-    useEffect(() => {
-        const el = document.getElementById(`audio_${id}`);
-        if (el) {
+    useLayoutEffect(() => {
+        const el = audio.current;
+        if (el && el.pause) {
+            el.src = src;
+            el.pause();
+            setPlaying(false);
+            el.currentTime = 0;
             el.addEventListener('ended', () => {
                 setPlaying(false)
             })
         }
-    }, [])
+        return () => {
+            if(audio.current && audio.current.pause){
+                audio.current.pause();
+                setPlaying(false);
+                audio.current.currentTime = 0
+            }
+        }
+    }, [src])
     return (
         <>
-            <audio style={{
+            <audio ref={audio} style={{
                 display: 'none'
             }} 
             //onCanPlayThrough={() => setReady(true)}

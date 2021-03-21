@@ -13,7 +13,8 @@ const App = ({ Component, pageProps }) => {
     const router = useRouter();
     const [global, setGlobal] = useState({
         user: PROD ? null : TEST,
-        isX: false
+        isX: false,
+        iPhone: false,
     });
     const getMe = async () => {
         try {
@@ -44,14 +45,14 @@ const App = ({ Component, pageProps }) => {
         });
     }, []);
     useLayoutEffect(() => {
-        let iPhone = /iPhone/.test(navigator.userAgent) && !window.MSStream
-        let aspect = window.screen.width / window.screen.height
-        if (iPhone && aspect.toFixed(3) === "0.462") {
-            setGlobal(global => ({
-                ...global,
-                isX: true
-            }))
-        }
+        const iPhone = /iPhone/.test(navigator.userAgent) && !window.MSStream
+        const aspect = window.screen.width / window.screen.height
+        const isX = (aspect.toFixed(3) === "0.462") && iPhone
+        setGlobal(global => ({
+            ...global,
+            isX,
+            iPhone
+        }))
     }, [])
     return (
         <GlobalContext.Provider value={global}>
