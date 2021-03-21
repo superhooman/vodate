@@ -27,7 +27,7 @@ const Audio = ({ src, id }) => {
         <>
             <audio style={{
                 display: 'none'
-            }} onCanPlay={() => setReady(true)} autoPlay={false} id={`audio_${id}`}>
+            }} onCanPlayThrough={() => setReady(true)} autoPlay={false} id={`audio_${id}`}>
                 <source src={src} type="audio/wav" />
             </audio>
             <div className="flex items-center justify-center my-20">
