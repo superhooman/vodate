@@ -5,6 +5,8 @@ import aituBridge from "@btsd/aitu-bridge";
 import Button from "../components/button";
 import GlobalContext from "../utils/globalContext";
 
+const PROD = process.env.NODE_ENV === "production"
+
 const Index = () => {
   const router = useRouter()
   const [started, setStarted] = useState(false);
@@ -70,7 +72,7 @@ const Index = () => {
       data: global.user
     }).then(async (res) => {
       if(res.data && res.data.success){
-        await aituBridge.enableNotifications();
+        PROD && await aituBridge.enableNotifications();
         router.push('/app');
       }
     }).finally(() => {
