@@ -26,10 +26,10 @@ const App = ({ Component, pageProps }) => {
     };
     useEffect(() => {
         PROD && getMe().then((data) => {
-            setGlobal({
-                ...global,
+            setGlobal(gl => ({
+                ...gl,
                 user: data,
-            });
+            }));
             axios({
                 url: "/user/me",
                 params: {

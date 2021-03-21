@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+import aituBridge from "@btsd/aitu-bridge";
 import Button from "../components/button";
 import GlobalContext from "../utils/globalContext";
 
@@ -67,8 +68,9 @@ const Index = () => {
       url: '/user/auth',
       method: "POST",
       data: global.user
-    }).then((res) => {
+    }).then(async (res) => {
       if(res.data && res.data.success){
+        await aituBridge.enableNotifications();
         router.push('/app');
       }
     }).finally(() => {
