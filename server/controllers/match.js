@@ -64,6 +64,9 @@ class MatchController {
             //todo: send push
             const m = (await Match.findById(exists._id).populate('users')).users.map(u => u.id);
             m.forEach((id) => {
+                if(process.env.NODE_ENV !== "production"){
+                    return;
+                }
                 const data = {
                     locale: 1,
                     message: 'У вас новая пара',
