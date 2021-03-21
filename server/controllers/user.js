@@ -44,7 +44,7 @@ class UserController {
             return sendError(req, res, errEnum.WRONG_AUTH);
         }
     });
-    this.router.get('/me', auth, async (req, res) => {
+    this.router.get('/me', async (req, res) => {
         if(!req.query.id){
             return sendError(req, res, errEnum.FORM_ERROR);
         }

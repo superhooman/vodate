@@ -39,6 +39,8 @@ const App = ({ Component, pageProps }) => {
                 if (res.data && res.data.success) {
                     router.push("/app");
                 }
+            }).catch((err) => {
+                console.log(err)
             });
         });
     }, []);
